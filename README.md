@@ -32,7 +32,7 @@
 Setup steps:
 - Open a terminal on your computer
 - Navigate to a folder of your choosing where to put the code
-- Then type `git clone https://github.com/idsc-frazzoli/IDSC_Seesaw.git` into your terminal
+- Then type `git clone https://github.com/idsc-frazzoli/Seesaw.git` into your terminal
 
 You should now have access to all the code required to set up the Seesaw in a folder of your choosing. 
 
@@ -40,9 +40,8 @@ You should now have access to all the code required to set up the Seesaw in a fo
 **Running the code**
 - Open the *System Workbench* (STM32) where you installed it in the previous steps
 - Click: File->Open Projects from file system....  
-- Click on "Directory..." and choose the "IDSC_Seesaw" folder on your computer
+- Click on "Directory..." and choose the "Seesaw" folder on your computer
 - Click "Finish"-button at the right bottom. The folder should now be loaded as a project. 
-- Delete the file "makefile" in the Seesaw "Debug"-folder (can be done from SystemWorkbench by right clicking the file and choosing "delete")
-- Compile the project (Click the brown hammer).
+- Compile the project (Click the brown hammer). You might have to click more than once. 
 - Connect your Seesaw to your computer via the USB cable. 
 - Run the code by either right-clicking your project and choosing "Run As" and the "Ac6 STM32 C/C++ Application" or by clicking the green arrow in the menu and choosing the same option.
