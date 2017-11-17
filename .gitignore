@@ -1,0 +1,23 @@
+.settings/language_settings.xml
+.cproject
+Debug/Seesaw.elf
+Debug/Seesaw.bin
+Debug/Drivers/STM32L4xx_HAL_Driver/Src/subdir.mk
+Debug/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/subdir.mk
+Debug/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/subdir.mk
+Debug/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/subdir.mk
+Debug/Middlewares/Third_Party/FreeRTOS/Source/subdir.mk
+Debug/Src/subdir.mk
+.settings/
+Debug/makefile
+Debug/output.map
+Debug/userApp/
+Seesaw Run.cfg
+NUCLEO-L432KC.xml
+Debug/.gitignore
+Debug/objects.list
+*.d
+*.o
+*.mk
+Debug/*.mk
+Debug/startup/
