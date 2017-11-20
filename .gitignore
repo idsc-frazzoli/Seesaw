@@ -1,6 +1,4 @@
-
 .settings/language_settings.xml
-.cproject
 Debug/Seesaw.bin
 Debug/Drivers/STM32L4xx_HAL_Driver/Src/subdir.mk
 Debug/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/subdir.mk
