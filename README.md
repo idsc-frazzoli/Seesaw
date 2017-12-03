@@ -7,6 +7,15 @@
 - At the end of Step 1 on the homepage, go to the download area `http://www.openstm32.org/Downloading%2Bthe%2BSystem%2BWorkbench%2Bfor%2BSTM32%2Binstaller`
 
 --------------------------------------------------------------------------
+**A note about navigating on your computer using the terminal**
+
+For the Mac and Linux installation is may be necessary to navigate to the folder to which you will have downloaded the programming environment file. If you are using Windows you should be able to bypass the following description.
+
+Common commands to use for this are:
+- ls - List all non-hidden files in a directory (same as the command "dir" for Windows)
+- cd FOLDERNAME - "change directory", Changes the current directory in which the terminal is open to the one specified in FOLDERNAME. Use "cd .." to go back out of a folder. If necessary, "cd ~" brings you back to "home". 
+
+--------------------------------------------------------------------------
 **Mac**
 - Scroll to header "Mac" and choose and download file: install_sw4stm32_macos_64bits-v2.2.run
 - Move the downloaded file and folder of your choice
