@@ -6,9 +6,9 @@
  */
 
 
-double kp = 0.00001;
-double Ti = 1000;
-double Td = 0.0;
+double kp = 0.000005;
+double Ti =  2000;
+double Td = 0.03;
 
 double e_prev = 0.0;
 double ef_prev = 0.0;
@@ -30,7 +30,7 @@ double dPID(double e, double ef, double dt) {
 	delta_uD = kp * Td / dt * (ef - 2 * ef_prev + ef_2prev);
 
 	// calculate PID output value
-	delta_u = delta_uP + delta_uI + delta_uD;
+	delta_u = delta_uP + delta_uD + delta_uI; // + delta_uD;
 	u = u_prev + delta_u;
 
 	// update values

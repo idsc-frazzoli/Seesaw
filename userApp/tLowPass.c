@@ -9,7 +9,7 @@
 #include "tLowPass.h"
 
 double y0 = 0.0;
-double k = 0.01;
+double k = 0.4;
 
 
 double dLP(double e, double h){

@@ -24,7 +24,8 @@ extern osMessageQId GyrodataQueueHandle;
 
 #pragma pack(push, 1) // exact fit - no padding
 struct signalPackage{
-	double e;
+	double r;
+	double y;
 	double u;
 };
 #pragma pack(pop) //back to whatever the previous packing mode was

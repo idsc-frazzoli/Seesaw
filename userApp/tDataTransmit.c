@@ -18,7 +18,6 @@
 struct dataPackage {
 	uint32_t systemTime;
 	struct signalPackage signals;
-	double testDouble;
 };
 #pragma pack(pop) //back to whatever the previous packing mode was
 
@@ -49,7 +48,6 @@ void vtDataTransmitStartTask(void const * argument) {
 		while (inSignalWrite) {
 		}
 		dataP.signals = seeSig;
-		dataP.testDouble = 2.71282;
 		memcpy(&uaBuffer[3], &dataP, sizeof(dataP));
 
 		/* checksum */ //TODO

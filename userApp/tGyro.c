@@ -27,41 +27,17 @@ void vtGyroStartTask(void const * argument)
 	  {
 		 /* read data from IMU */
 		 vReadIMU(&hi2c1, &xIMUReceiveBuffer.AccelX, LSM6DS3_OUTX_H_XL, LSM6DS3_OUTX_L_XL);
-		 vReadIMU(&hi2c1, &xIMUReceiveBuffer.AccelY, LSM6DS3_OUTY_H_XL, LSM6DS3_OUTY_L_XL);
-		 vReadIMU(&hi2c1, &xIMUReceiveBuffer.AccelZ, LSM6DS3_OUTZ_H_XL, LSM6DS3_OUTZ_L_XL);
-		 vReadIMU(&hi2c1, &xIMUReceiveBuffer.GyroX, LSM6DS3_OUTX_H_G, LSM6DS3_OUTX_L_G);
+//		 vReadIMU(&hi2c1, &xIMUReceiveBuffer.AccelY, LSM6DS3_OUTY_H_XL, LSM6DS3_OUTY_L_XL);
+//		 vReadIMU(&hi2c1, &xIMUReceiveBuffer.AccelZ, LSM6DS3_OUTZ_H_XL, LSM6DS3_OUTZ_L_XL);
+//		 vReadIMU(&hi2c1, &xIMUReceiveBuffer.GyroX, LSM6DS3_OUTX_H_G, LSM6DS3_OUTX_L_G);
 		 vReadIMU(&hi2c1, &xIMUReceiveBuffer.GyroY, LSM6DS3_OUTY_H_G, LSM6DS3_OUTY_L_G);
-		 vReadIMU(&hi2c1, &xIMUReceiveBuffer.GyroZ, LSM6DS3_OUTZ_H_G, LSM6DS3_OUTZ_L_G);
+//		 vReadIMU(&hi2c1, &xIMUReceiveBuffer.GyroZ, LSM6DS3_OUTZ_H_G, LSM6DS3_OUTZ_L_G);
 
 		 /* send data to Queue */
 	     osMailPut(GyrodataQueueHandle, &xIMUReceiveBuffer);
 
-	     /* send data to the UART */
-	     if(SEND_GYRO_DATA_TO_USART){
-	    	 uint8_t ucUARTSendBuffer[18];
-
-	    	 /* clear send buffer */
-	    	 for(uint8_t i=0; i<14; i++)
-	    	 	 {ucUARTSendBuffer[i]=0; }
-
-	    	 /* setup buffer structure */
-	    	 ucUARTSendBuffer[7] = '\t';
-	    	 ucUARTSendBuffer[8] = '\t';
-	    	 ucUARTSendBuffer[17] = '\n';
-	    	 ucUARTSendBuffer[16] = '\r';
-
-	    	 /* load send Buffer with data*/
-	    	 itoa(xIMUReceiveBuffer.GyroY, ucUARTSendBuffer, 10);
-	    	 itoa(xIMUReceiveBuffer.AccelZ, &ucUARTSendBuffer[9], 10);
-
-	    	 /* send buffer to UART */
-	    	 HAL_UART_Transmit(& huart2, &ucUARTSendBuffer, sizeof(ucUARTSendBuffer), 100);
-	     	 }
-
-
-
 	     /* Delay to slow down this task. FixMe: change IMU readout to be controlled by interrupt */
-	     osDelay(1);
+	     osDelay(5);
 	  }
 }
 
@@ -72,7 +48,7 @@ void vGyroInitLSMD6DS3 (void)
 
 	/* Init gyroscope */
 	/* ODRG = Gyroscope output data rate selection. Default value: ODR_OFF */
-	/* FSG = Gyroscope full-scale selection. Default value: 245°/s */
+	/* FSG = Gyroscope full-scale selection. Default value: 245ï¿½/s */
 	uiI2C_Data[0] = LSM6DS3_CTRL2_G;
 	uiI2C_Data[1] = (LSM6D3_ODRG_104HZ | LSM6D3_FSG_245DPS);
 	HAL_I2C_Master_Transmit(&hi2c1, (uint16_t) (LSM6DS2_ADRESS), (uint8_t *) uiI2C_Data, 0x02, 100);
@@ -94,12 +70,19 @@ void vGyroInitLSMD6DS3 (void)
  */
 void vReadIMU(I2C_HandleTypeDef *pxI2CHandler, int16_t *pxDataValue, uint8_t I2C_HByte, uint8_t I2C_LByte)
 {
-	int8_t pcData;
+	uint8_t isOk = 1;
+	HAL_StatusTypeDef status;
+	uint8_t pcData;
+	int16_t data;
 
-	HAL_I2C_Mem_Read(pxI2CHandler, LSM6DS2_ADRESS, I2C_HByte , 0x01, &pcData, 0x01, 100);
-	*pxDataValue = (int16_t) pcData<<8;
-	HAL_I2C_Mem_Read(pxI2CHandler, LSM6DS2_ADRESS, I2C_LByte , 0x01, &pcData, 0x01, 100);
-	*pxDataValue = *pxDataValue | (int16_t) pcData;
+	status = HAL_I2C_Mem_Read(pxI2CHandler, LSM6DS2_ADRESS, I2C_HByte , 0x01, &pcData, 0x01, 100);
+	isOk &= status == HAL_OK;
+	data = pcData << 8;
+	status = HAL_I2C_Mem_Read(pxI2CHandler, LSM6DS2_ADRESS, I2C_LByte , 0x01, &pcData, 0x01, 100);
+	isOk &= status == HAL_OK;
+	data |= pcData;
+	if (isOk)
+	  *pxDataValue = data;
 }
 
 

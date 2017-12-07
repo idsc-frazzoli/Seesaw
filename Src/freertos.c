@@ -83,10 +83,10 @@ void MX_FREERTOS_Init(void) {
 //  osThreadDef(MMITask, vtMMIStartTask, osPriorityHigh, 0, 128);
 //  MMITaskHandle = osThreadCreate(osThread(MMITask), NULL);
 
-  osThreadDef(DataTransmitTask, vtDataTransmitStartTask, osPriorityHigh, 0, 128);
+  osThreadDef(DataTransmitTask, vtDataTransmitStartTask, osPriorityNormal, 0, 128);
   DataTransmitTaskHandle = osThreadCreate(osThread(DataTransmitTask), NULL);
 
-  osThreadDef(GyroTask, vtGyroStartTask, osPriorityNormal, 0, 128);
+  osThreadDef(GyroTask, vtGyroStartTask, osPriorityHigh, 0, 128);
   GyroTaskHandle = osThreadCreate(osThread(GyroTask), NULL);
 
   osThreadDef(ControlTask, vtControlStartTask, osPriorityNormal, 0, 128);
