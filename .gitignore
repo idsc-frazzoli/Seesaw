@@ -1,4 +1,6 @@
 .settings/language_settings.xml
+*.elf
+.cproject
 Debug/Seesaw.bin
 Debug/Drivers/STM32L4xx_HAL_Driver/Src/subdir.mk
 Debug/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/subdir.mk
@@ -20,3 +22,21 @@ Debug/objects.list
 Debug/*.mk
 Debug/startup/
 Seesaw Debug.cfg
+*.aux
+*.lof
+*.log
+*.lot
+*.fls
+*.out
+*.toc
+*.fmt
+*.fot
+*.cb
+*.cb2
+*.fdb_latexmk
+*.synctex
+*.synctex(busy)
+*.synctex.gz
+*.synctex.gz(busy)
+*.pdfsync
+
