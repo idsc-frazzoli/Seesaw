@@ -19,22 +19,25 @@ struct signalPackage seeSig;
 char inSignalWrite = 0;
 
 /*
----------------------- TASK 1 ------------------------------------------
+---------------------- TASK 2 ------------------------------------------
 */
+
 /* vtControlStartTask function */
 void vtControlStartTask(void const * argument) {
 	/* local constants  ------------------------------------------------- */
-		const uint16_t uiMotorBaseSpeed = 9; /* motor base speed */
-		const double dAngleCorrectionConst = 0.4;
-		const double dPeriod = 600; // Period length constant of reference signal
+	const uint16_t uiMotorBaseSpeed = 9; /* motor base speed */
+	const double dAngleCorrectionConst = 0.4;
+	const double dMagnitudeStep = 5000.0;
+	const double dPeriod = 2400; // Period length constant of reference signal
 
 	/* local variables -------------------------------------------------- */
 	xMotorPWMCommand_t xMotorCommandBuffer; /* Buffer contains motor PWM values, to be sent to motor task*/
 	xIMUDATA_t xIMUDataBuffer; /* Buffer contains IMU read outs, came in from gyro task*/
 	double dAnglePos; /* max variation of motor base speed*/
 	double tLast = 0.0;
-
-	double r = 0.0;
+	double polarity = 1.0;
+	uint8_t  uiCounter = 0;
+	double r = -dMagnitudeStep; // INITIAL REFERENCE SIGNAL
 	double dN = 0.0; // COUNT FOR REFERENCE SIGNAL
 
 
@@ -52,20 +55,31 @@ void vtControlStartTask(void const * argument) {
 			osMailFree(GyrodataQueueHandle, IMUData);
 		}
 
-		// SINUSOIDAL REFERENCE INPUT
-		r = 6000*sin(dN/dPeriod);
+		// STEP REFERENCE INPUT
 		dN++;
-		if (dN > 2*3.14*dPeriod) dN = 0; // Enforce bounds on dN
+		if (dN > dPeriod)
+			{
+			dN = 0; // Enforce bounds on dN
+			r += polarity * dMagnitudeStep; // Step response
+			uiCounter += 1;
+			if (uiCounter > 1)
+				{
+				polarity *= -1;
+				uiCounter = 0;
+				}
+			}
 
 		dAnglePos = (double) xIMUDataBuffer.AccelX;
 
+
 		/* calculation of the control input */
 		double systemTime = (double) xTaskGetTickCount();
-		double dt = (systemTime - tLast)*0.001;
+		double dt = (systemTime - tLast)*0.001; // milliseconds to second conversion
 		tLast = systemTime;
 
-		// CONTROLLER
-		double u = dPID(r, dAnglePos,dt);
+		// CONTROLLER - Error signal is calculated in dPIDabc
+		double u = dPID(r, dAnglePos, dt);
+
 
 
 		/* signal transmission */

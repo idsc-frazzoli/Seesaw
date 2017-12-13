@@ -10,6 +10,6 @@
 
 
 /* Function prototypes */
-double dPID(double e, double ef, double dt);
+double dPID(double r, double y, double dt);
 
 #endif /* TCONTROLPID_H_ */
