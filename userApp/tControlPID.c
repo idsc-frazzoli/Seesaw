@@ -2,7 +2,7 @@
  * tControlPID.c
  *
  *  Created on: Nov 10, 2017
- *      Author: root
+ *      Author: jzilly
  */
 #include <stdio.h>
 #include "tLowPass.h"
@@ -12,7 +12,7 @@ uint16_t uiTaskCase = -1; // Choose either 1, 2, or 3
 						  // any other number will use default case
 
 // Default parameters - tune the parameters further below in the dPID function
-double kp = 1.0e-6;
+double kp = 1.0e-7;
 double kI = 0;
 double kd = 0;
 double k_ARW = 0.0;
@@ -27,7 +27,7 @@ double ef_prev = 0.0;
 double u_prev = 0.0;
 double ef_2prev = 0.0;
 
-double u_max = 0.1; // Tune empirically
+double u_max = 0.035; // Tune empirically
 
 double above_thres_u = 0.0;
 double ei = 0.0; // integral error
@@ -47,7 +47,7 @@ double dPID(double r, double y, double dt) {
 	// Task 1: Trajectory following
 	// Tune the controller parameters
 	case 1 : {
-		kp = 1.0-7;
+		kp = 1.0e-8;
 		kI = 0.0;
 		kd = 0.0;
 		break;}
@@ -55,7 +55,7 @@ double dPID(double r, double y, double dt) {
 	// Tune the controller parameters and implement setpoint weighting,
 	// Tune a,b,c at the top of the file
 	case 2 : {
-		kp = 1.0-7;
+		kp = 1.0e-7;
 		kI = 0.0;
 		kd = 0.0;
 		break; }
@@ -63,7 +63,7 @@ double dPID(double r, double y, double dt) {
 	// Tune the controller parameters, implement ARW scheme, tune k_ARW and u_max,
 	// setpoint weighting, tune a,b,c
 	case 3 : {
-		kp = 1.0-7;
+		kp = 1.0e-7;
 		kI = 0.0;
 		kd = 0.0;
 		k_ARW = 0.0; // without ARW -> k_ARW = 0;
@@ -88,7 +88,7 @@ double dPID(double r, double y, double dt) {
 	delta_uP = kp * (e - e_prev);
 
 	// I - part
-	ei = r -  y;
+	ei = e;
 	ei = kI*ei;
 	delta_uI = dt * ei;
 
