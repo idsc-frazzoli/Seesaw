@@ -10,7 +10,7 @@
 
 
 /* functions */
-double dLP(double e, double h);
+double dLP(double e, double dt);
 
 
 #endif /* TLOWPASS_H_ */

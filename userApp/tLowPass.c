@@ -8,15 +8,15 @@
 /* Includes ------------------------------------------------------------------*/
 #include "tLowPass.h"
 
-double y0 = 0.0;
+double y_prev = 0.0;
 double k = 4e0;
 // h is the time step of the forward - Euler approximation
 // Tf = 1/k
 // P_lowpass = 1/(Tf*s+1)
 
 double dLP(double e, double dt){
-	double y1 = y0 + k*dt*(e -y0);
-	y0 = y1;
+	double y1 = y_prev + k*dt*(e - y_prev);
+	y_prev = y1;
 	return y1;
 }
 
